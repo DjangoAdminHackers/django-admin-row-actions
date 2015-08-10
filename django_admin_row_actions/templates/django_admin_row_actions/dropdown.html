@@ -1,0 +1,25 @@
+<div class="dropdown">
+  <button id="{{ btn_id }}" class="btn {{ btn_type }} {{ btn_size }}" type="button" data-toggle="dropdown">
+    {{ label }}
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu {{ btn_dropdown_position }}" role="menu" aria-labelledby="{{ btn_dropdown_aria }}">
+    {% for item in items %}
+      {% if item.divided %}
+        <li role="presentation" class="divider"></li>
+      {% endif %}
+        <li class="{% if not item.enabled %}disabled{% endif %}" role="presentation">
+          <a
+              role="menuitem"
+              data-toggle="tooltip"
+              title="{{ item.tooltip }}"
+              {% for attr,val in item.data_attributes.items %}data-{{ attr }}="{{ val }}"{% endfor %}
+              tabindex="{{ item.tab_index }}"
+              href="{{ item.url }}"
+          >
+            {{ item.label }}
+          </a>
+        </li>
+    {% endfor %}
+  </ul>
+</div>
