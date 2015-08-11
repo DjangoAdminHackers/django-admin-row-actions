@@ -1,25 +1,30 @@
-<div class="dropdown">
-  <button id="{{ btn_id }}" class="btn {{ btn_type }} {{ btn_size }}" type="button" data-toggle="dropdown">
-    {{ label }}
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu {{ btn_dropdown_position }}" role="menu" aria-labelledby="{{ btn_dropdown_aria }}">
-    {% for item in items %}
-      {% if item.divided %}
-        <li role="presentation" class="divider"></li>
-      {% endif %}
-        <li class="{% if not item.enabled %}disabled{% endif %}" role="presentation">
-          <a
-              role="menuitem"
-              data-toggle="tooltip"
-              title="{{ item.tooltip }}"
-              {% for attr,val in item.data_attributes.items %}data-{{ attr }}="{{ val }}"{% endfor %}
-              tabindex="{{ item.tab_index }}"
-              href="{{ item.url }}"
-          >
-            {{ item.label }}
-          </a>
-        </li>
-    {% endfor %}
-  </ul>
+{%  load static %}
+<a href="#" data-jq-dropdown="#jq-dropdown-{{ dom_id }}">{{ label }}<span class="jq-dropdown-caret"></span></a>
+<div id="jq-dropdown-{{ dom_id }}" class="jq-dropdown jq-dropdown-tip jq-dropdown-relative">
+    <ul class="jq-dropdown-menu">
+        {% for item in items %}
+            {% if item.divided %}
+                <li class="jq-dropdown-divider"></li>
+            {% endif %}
+            <li {% for attr,val in item.data_attributes.items %}data-{{ attr }}="{{ val }}"{% endfor %}>
+                {% if item.enabled %}
+                    <a href="{{ item.url }}" title="{{ item.tooltip }}">{{ item.label }}</a>
+                {% else %}
+                    <span class="jq-disabled" title="{{ item.tooltip }}">{{ item.label }}</span>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    <script>
+        jQuery = django.jQuery;
+        if (!window.jqDropdownLoaded) { // Only load it once
+            window.jqDropdownLoaded = true;
+            jQuery.ajax({
+                url: '{% static "js/jquery.dropdown.js" %}',
+                dataType: "script",
+                cache: true
+            })
+        }
+    </script>
+    <link rel="stylesheet" href="{% static "css/jquery.dropdown.min.css" %}" media="screen" />       
 </div>

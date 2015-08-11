@@ -1,5 +1,2 @@
-# Kind of like __all__, make these available for public
-from .utils import (
-    DjangoRowActions,
-    takes_instance_or_queryset,
-)
+from .admin import AdminRowActionsMixin
+from .utils import takes_instance_or_queryset
