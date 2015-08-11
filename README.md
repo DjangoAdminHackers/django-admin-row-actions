@@ -19,7 +19,13 @@ Inspired (and code borrowed from): https://github.com/crccheck/django-object-act
     
 3. Add the mixin to your ModelAdmin:
 
+    from django_admin_row_actions import AdminRowActionsMixin
+    
+    ...
+
     class ExampleAdmin(AdminRowActionsMixin, admin.ModelAdmin):
+    
+      ...
     
 
 4. Define a get_row_actions method on your ModelAdmin

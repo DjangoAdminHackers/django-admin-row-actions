@@ -12,6 +12,7 @@ setup(
         'django_admin_row_actions': [
             'static/css/*.css',
             'static/js/*.js',
+            'templates/django_admin_row_actions/*.html',
         ]
     },
     include_package_data=True,
