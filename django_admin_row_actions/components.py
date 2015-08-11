@@ -34,5 +34,5 @@ class Dropdown(BaseComponent):
 
     template = 'django_admin_row_actions/dropdown.html'
 
-    def __init__(self, btn_size='sm', btn_type='primary', **kwargs):
-        super(Dropdown, self).__init__(btn_size=btn_size, btn_type=btn_type, **kwargs)
+    def __init__(self, **kwargs):
+        super(Dropdown, self).__init__(**kwargs)

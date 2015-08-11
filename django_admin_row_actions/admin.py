@@ -11,6 +11,12 @@ class AdminRowActionsMixin(admin.ModelAdmin):
 
     rowactions = []
 
+    class Media:
+        js = ('js/jquery.dropdown.min.js',)
+        css = {
+            'all': ['css/jquery.dropdown.min.css',],
+        }
+        
     def get_list_display(self, request):
         list_display = super(AdminRowActionsMixin, self).get_list_display(request)
         if '_row_actions' not in list_display:

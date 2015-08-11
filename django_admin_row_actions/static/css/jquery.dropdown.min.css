@@ -102,7 +102,7 @@
     border-left: 4px solid transparent;
 }
 
-// Extra rule to allow disabled menu items
+/* Extra rule to allow disabled menu items */
 
 .jq-dropdown .jq-dropdown-menu li > span.jq-disabled {
     display: block;

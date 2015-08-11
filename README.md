@@ -33,14 +33,19 @@ jquery-dropdown credits go to Cory LaViska: http://labs.abeautifulsite.net/jquer
     def get_row_actions(self, obj):
         row_actions = [
             {'label': 'Edit', 'url': obj.get_edit_url(), 'enabled': obj.status is not 'cancelled'},
-            {'label': 'Download PDF', 'url': obj.get_pdf_url(), },
+            {'label': 'Download PDF', 'url': obj.get_pdf_url()},
+            {'label': 'Convert', 'url': reverse('convert_stuff', args=[obj.id]), tooltip='Convert stuff'},
             {'label': 'Cancel', 'action': 'mark_cancelled'},
         ]
         row_actions += super(ExampleAdmin, self).get_row_actions(obj)
         return row_actions
         
-    The first two menu items are simple links to a url you provide. The 3rd one defines 'action' instead of 'url'.
+    The first three menu items are simple links to a url you provide by whatever means you choose.
+    
+    The final one defines 'action' instead of 'url'.
     
     This should be the name of a callable on your ModelAdmin or Model class
     (similar to https://docs.djangoproject.com/en/1.8/ref/contrib/admin/#django.contrib.admin.ModelAdmin.list_display )
+    
+    Also note the use of 'enabled' and 'tooltip' 
     
