@@ -1,13 +1,13 @@
 Django Admin Row Actions
 ========================
 
-Inspired (and code borrowed from): https://github.com/crccheck/django-object-actions
-
+Inspired (and code based on): https://github.com/crccheck/django-object-actions
+jquery-dropdown credits go to Cory LaViska: http://labs.abeautifulsite.net/jquery-dropdown/
 
 
 1. Until this is submitted to PyPi install using git:
 
-    pip install git+git@github.com:DjangoAdminHackers/django-admin-row-actions.git
+    pip install git+https://github.com/DjangoAdminHackers/django-admin-row-actions.git
     
 2. Add to INSTALLED_APPS:
 
