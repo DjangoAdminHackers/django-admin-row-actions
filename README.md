@@ -4,6 +4,14 @@ Django Admin Row Actions
 Inspired (and code based on): https://github.com/crccheck/django-object-actions
 jquery-dropdown credits go to Cory LaViska: http://labs.abeautifulsite.net/jquery-dropdown/
 
+Allows you to easily define a drop-down 'actions' menu that is appended as the final column in your model's changelist
+and perform actions on that row.
+
+Menu items can call urls or methods, can be disabled, have tooltips etc.
+
+I've extracted this from code written for http://hireablehq.com/. The admin there has Bootstrap available but I've
+modified this version to use a standalone jQuery dropdown.
+
 
 1. Until this is submitted to PyPi install using git:
 
