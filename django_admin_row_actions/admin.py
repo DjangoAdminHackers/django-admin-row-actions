@@ -92,10 +92,7 @@ class AdminRowActionsMixin(admin.ModelAdmin):
     ##################
 
     def get_row_actions(self, obj):
-        if getattr(self, 'rowactions', False):
-            return []
-        else:
-            return self.rowactions
+        return getattr(self, 'rowactions', False) or []
 
     # Default to using row actions for object actions
     # Aside from the 'Edit' action of course
