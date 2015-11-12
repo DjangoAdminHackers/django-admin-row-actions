@@ -8,9 +8,9 @@
             {% endif %}
             <li>
                 {% if item.enabled %}
-                    <a href="{{ item.url }}" title="{{ item.tooltip }}">{{ item.label }}</a>
+                    <a class="{{ item.classes }}" href="{{ item.url }}" title="{{ item.tooltip }}">{{ item.label }}</a>
                 {% else %}
-                    <span class="jq-disabled" title="{{ item.tooltip }}">{{ item.label }}</span>
+                    <span class="{{ item.classes }} jq-disabled" title="{{ item.tooltip }}">{{ item.label }}</span>
                 {% endif %}
             </li>
         {% endfor %}
