@@ -20,7 +20,7 @@ class ModelToolsView(SingleObjectMixin, View):
         # Call the named method either on the modeladmin or on the model instance
         if getattr(model_admin, kwargs['tool'], False):
             action_method = getattr(model_admin, kwargs['tool'])
-            ret = action_method(request, obj)  # TODO should the signature actually be (obj, request) for consistancy?
+            ret = action_method(request=request, obj=obj)  # TODO should the signature actually be (obj, request) for consistancy?
         elif getattr(obj, kwargs['tool'], False):
             action_method = getattr(obj, kwargs['tool'])
             ret = action_method()
