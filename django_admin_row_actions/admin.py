@@ -33,20 +33,20 @@ class AdminRowActionsMixin(admin.ModelAdmin):
 
         items = []
 
-        r = self.get_row_actions(obj)
+        row_actions = self.get_row_actions(obj)
         url_prefix = '{}/'.format(obj.pk if includePk else '')
         
-        for tool in r:
-            if isinstance(tool, basestring):
+        for tool in row_actions:
+            if isinstance(tool, basestring):  # Just a str naming a callable
                 tool_dict = to_dict(tool)
                 items.append({
                     'label': tool_dict['label'],
                     'url': '{}rowactions/{}/'.format(url_prefix, tool),
                 })
                 
-            elif isinstance(tool, dict):
+            elif isinstance(tool, dict):  # A parameter dict
                 tool['enabled'] = tool.get('enabled', True)
-                if 'action' in tool:  # If action is set then use our generic url in preference to 'url' value
+                if 'action' in tool:  # If 'action' is specified then use our generic url in preference to 'url' value
                     tool['url'] = '{}rowactions/{}/'.format(url_prefix, tool['action'])
                 items.append(tool)
         
@@ -94,8 +94,10 @@ class AdminRowActionsMixin(admin.ModelAdmin):
     def get_row_actions(self, obj):
         return getattr(self, 'rowactions', False) or []
 
-    # Default to using row actions for object actions
-    # Aside from the 'Edit' action of course
+    # If we're also using django_object_actions
+    # then default to using row actions as object actions
+    # We special case an action with the label 'Edit' as that would be redundant
+    # as we're already on the edit screen (i.e. the changeform)
 
     def get_object_actions(self, request, context, **kwargs):
         obj = context.get('original', None)

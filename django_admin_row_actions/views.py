@@ -11,21 +11,33 @@ class ModelToolsView(SingleObjectMixin, View):
 
     def get(self, request, **kwargs):
         
-        # SingleOjectMixin's `get_object`. Works because the view
+        # SingleObjectMixin's `get_object`. Works because the view
         # is instantiated with `model` and the urlpattern has `pk`.
         
         obj = self.get_object()
-        try:
-            model_admin = admin.site._registry[obj.__class__]
-            ret = getattr(model_admin, kwargs['tool'])(request, obj)
-        except KeyError:
+        model_admin = admin.site._registry[obj.__class__]
+        
+        # Call the named method either on the modeladmin or on the model instance
+        if getattr(model_admin, kwargs['tool'], False):
+            action_method = getattr(model_admin, kwargs['tool'])
+            ret = action_method(request, obj)  # TODO should the signature actually be (obj, request) for consistancy?
+        elif getattr(obj, kwargs['tool'], False):
+            action_method = getattr(obj, kwargs['tool'])
+            ret = action_method()
+        else:
             raise Http404
+        
+        # If the method returns a response use that,
+        # otherwise redirect back to the url we were called from
         if isinstance(ret, HttpResponse):
-            return ret
-        back = request.path.rsplit('/', 3)[0] + '/'
-        return HttpResponseRedirect(back)
+            response = ret
+        else:
+            back = request.META['HTTP_REFERER']
+            response = HttpResponseRedirect(back)
+            
+        return response
 
-    # Allow POST
+    # Also allow POST
     post = get
 
     def message_user(self, request, message):
