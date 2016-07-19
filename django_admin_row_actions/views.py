@@ -17,8 +17,14 @@ class ModelToolsView(SingleObjectMixin, View):
         obj = self.get_object()
         model_admin = admin.site._registry[obj.__class__]
         
-        # Call the named method either on the modeladmin or on the model instance
-        if getattr(model_admin, kwargs['tool'], False):
+        # Look up the action in the following order:
+        # 1. in the named_row_actions dict (for lambdas etc)
+        # 2. as a method on the model admin
+        # 3. as a method on the model
+        if kwargs['tool'] in model_admin._named_row_actions:
+            action_method = model_admin._named_row_actions[kwargs['tool']]
+            ret = action_method(request=request, obj=obj)
+        elif getattr(model_admin, kwargs['tool'], False):
             action_method = getattr(model_admin, kwargs['tool'])
             ret = action_method(request=request, obj=obj)  # TODO should the signature actually be (obj, request) for consistancy?
         elif getattr(obj, kwargs['tool'], False):
