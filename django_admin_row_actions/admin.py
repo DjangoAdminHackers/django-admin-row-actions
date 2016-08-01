@@ -1,5 +1,4 @@
 from django.conf.urls import patterns
-from django.contrib import admin
 
 from .components import Dropdown
 from .views import ModelToolsView
@@ -11,12 +10,13 @@ class AdminRowActionsMixin(object):
 
     rowactions = []
     _named_row_actions = {}
-    
-    class Media:
-        js = ('js/jquery.dropdown.min.js',)
-        css = {
-            'all': ['css/jquery.dropdown.min.css',],
-        }
+
+    @property
+    def media(self):
+        media = super(AdminRowActionsMixin, self).media
+        media.add_js(['js/jquery.dropdown.min.js'])
+        media.add_css({'all': ['css/jquery.dropdown.min.css']})
+        return media
         
     def get_list_display(self, request):
         list_display = super(AdminRowActionsMixin, self).get_list_display(request)
@@ -122,12 +122,3 @@ class AdminRowActionsMixin(object):
                     elif isinstance(row_action['action'], tuple):
                         change_actions.append(str(row_action['action'][1]))
         return change_actions
-    
-    class Meta:
-        css = {
-            'all': [
-                'css/jquery.dropdown.min.css',
-            ],
-        }
-    
-    
