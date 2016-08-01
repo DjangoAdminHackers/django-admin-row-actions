@@ -8,6 +8,9 @@ setup(
     author='Andy Baker',
     author_email='andy@andybak.net',
     packages=find_packages(),
+    install_requires=[
+        'six',
+    ],
     package_data={
         'django_admin_row_actions': [
             'static/css/*.css',

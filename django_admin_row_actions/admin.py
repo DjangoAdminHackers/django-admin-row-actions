@@ -1,5 +1,7 @@
 from django.conf.urls import patterns
 
+from six import string_types
+
 from .components import Dropdown
 from .views import ModelToolsView
 
@@ -38,7 +40,7 @@ class AdminRowActionsMixin(object):
         url_prefix = '{}/'.format(obj.pk if includePk else '')
         
         for tool in row_actions:
-            if isinstance(tool, str):  # Just a str naming a callable
+            if isinstance(tool, string_types):  # Just a str naming a callable
                 tool_dict = to_dict(tool)
                 items.append({
                     'label': tool_dict['label'],
@@ -114,10 +116,10 @@ class AdminRowActionsMixin(object):
     
             for row_action in row_actions:
                 # Object actions only supports strings as action indentifiers
-                if isinstance(row_action, basestring):
+                if isinstance(row_action, string_types):
                     change_actions.append(row_action)
                 elif isinstance(row_action, dict):
-                    if isinstance(row_action['action'], basestring):
+                    if isinstance(row_action['action'], string_types):
                         change_actions.append(row_action['action'])
                     elif isinstance(row_action['action'], tuple):
                         change_actions.append(str(row_action['action'][1]))
