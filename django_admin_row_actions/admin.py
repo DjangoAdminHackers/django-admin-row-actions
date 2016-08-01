@@ -38,7 +38,7 @@ class AdminRowActionsMixin(object):
         url_prefix = '{}/'.format(obj.pk if includePk else '')
         
         for tool in row_actions:
-            if isinstance(tool, basestring):  # Just a str naming a callable
+            if isinstance(tool, str):  # Just a str naming a callable
                 tool_dict = to_dict(tool)
                 items.append({
                     'label': tool_dict['label'],
