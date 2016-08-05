@@ -1,4 +1,4 @@
-from django.conf.urls import patterns
+from django.conf.urls import url
 
 from six import string_types
 
@@ -75,12 +75,11 @@ class AdminRowActionsMixin(object):
         
         """Gets the url patterns that route each tool to a special view"""
         
-        my_urls = patterns(
-            '',
-            (r'^(?P<pk>\d+)/rowactions/(?P<tool>\w+)/$',
+        my_urls = [
+            url(r'^(?P<pk>\d+)/rowactions/(?P<tool>\w+)/$',
                 self.admin_site.admin_view(ModelToolsView.as_view(model=self.model))
             )
-        )
+        ]
         return my_urls
     
     ###################################
