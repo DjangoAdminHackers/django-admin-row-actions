@@ -4,7 +4,7 @@ def patterns(prefix, *args):
         from django.conf.urls import patterns as django_patterns
         return django_patterns(prefix, *args)
     else:
-        return list(*args)
+        return list(args)
 
 from six import string_types
 
