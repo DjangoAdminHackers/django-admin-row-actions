@@ -1,4 +1,10 @@
-from django.conf.urls import patterns
+from django import VERSION
+def patterns(prefix, *args):
+    if prefix != '' or VERSION < (1, 9):
+        from django.conf.urls import patterns as django_patterns
+        return django_patterns(prefix, *args)
+    else:
+        return list(args)
 
 from six import string_types
 
