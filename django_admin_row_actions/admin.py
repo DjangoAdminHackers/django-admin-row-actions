@@ -1,9 +1,21 @@
-from django.conf.urls import patterns
+from django import VERSION
+from django.conf.urls import url
 
 from six import string_types
 
 from .components import Dropdown
 from .views import ModelToolsView
+
+
+def patterns(prefix, *args):
+    if VERSION < (1, 9):
+        from django.conf.urls import patterns as django_patterns
+        return django_patterns(prefix, *args)
+    elif prefix != '':
+        raise Exception("You need to update your URLConf to be a list of URL "
+                        "objects")
+    else:
+        return list(args)
 
 
 class AdminRowActionsMixin(object):
@@ -77,7 +89,7 @@ class AdminRowActionsMixin(object):
         
         my_urls = patterns(
             '',
-            (r'^(?P<pk>\d+)/rowactions/(?P<tool>\w+)/$',
+            url(r'^(?P<pk>\d+)/rowactions/(?P<tool>\w+)/$',
                 self.admin_site.admin_view(ModelToolsView.as_view(model=self.model))
             )
         )
