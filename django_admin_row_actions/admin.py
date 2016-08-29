@@ -74,12 +74,14 @@ class AdminRowActionsMixin(object):
     def _row_actions(self, obj):
         
         items = self.get_actions_list(obj)
-        html = Dropdown(
-            label="Actions",
-            items=items,
-        ).render()
-        
-        return html
+        if items:
+            html = Dropdown(
+                label="Actions",
+                items=items,
+            ).render()
+
+            return html
+        return ''
     _row_actions.short_description = ''
     _row_actions.allow_tags = True
     

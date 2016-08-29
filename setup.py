@@ -2,11 +2,12 @@ from setuptools import find_packages
 from setuptools import setup
 
 setup(
-    name='django admin row actions',
+    name='django-admin-row-actions',
     version='0.0.1',
     description='django admin row actions',
     author='Andy Baker',
     author_email='andy@andybak.net',
+    url='https://github.com/DjangoAdminHackers/django-admin-row-actions',
     packages=find_packages(),
     install_requires=[
         'six',
