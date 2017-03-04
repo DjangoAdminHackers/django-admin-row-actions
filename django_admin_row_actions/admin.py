@@ -1,5 +1,6 @@
 from django import VERSION
 from django.conf.urls import url
+from django.utils.translation import ugettext_lazy as _
 
 from six import string_types
 
@@ -76,7 +77,7 @@ class AdminRowActionsMixin(object):
         items = self.get_actions_list(obj)
         if items:
             html = Dropdown(
-                label="Actions",
+                label=_("Actions"),
                 items=items,
             ).render()
 
