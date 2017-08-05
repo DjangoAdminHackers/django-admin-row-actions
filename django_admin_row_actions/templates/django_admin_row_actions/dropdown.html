@@ -8,7 +8,16 @@
             {% endif %}
             <li>
                 {% if item.enabled %}
-                    <a class="{{ item.classes }}" href="{{ item.url }}" title="{{ item.tooltip }}">{{ item.label }}</a>
+                    {% if item.method == 'POST' %}
+                    <form method="post" action="{{ item.url }}">
+                        {% csrf_token %}
+                        <input class="{{ item.classes }}" type="submit" title="{{ item.tooltip }}" value="{{ item.label }}" />
+                    </form>
+                    {% else %}
+
+                    <a class="{{ item.classes }}" href="{{ item.url }}" title="{{ item.tooltip }}">{{ item.label }}
+                    </a>
+                    {% endif %}
                 {% else %}
                     <span class="{{ item.classes }} jq-disabled" title="{{ item.tooltip }}">{{ item.label }}</span>
                 {% endif %}
