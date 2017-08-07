@@ -3,16 +3,13 @@ from django.template.loader import render_to_string
 
 
 class BaseComponent(object):
-    
+
     template = None
     instances = []
 
     def __init__(self, **kwargs):
-        
-        # Add ourselves to the class's list of instances
-        # so we can generate a unique id number for the html
-        
         self.__class__.instances.append(weakref.proxy(self))
+        self.request = kwargs.pop('request')
         self.context = kwargs
         self.context['dom_id'] = self.get_unique_id()
 
@@ -24,6 +21,7 @@ class BaseComponent(object):
         return render_to_string(
             self.template,
             self.context,
+            request=self.request
         )
 
     def __unicode__(self):
