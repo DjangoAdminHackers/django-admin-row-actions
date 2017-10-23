@@ -18,7 +18,7 @@ class ModelToolsView(SingleObjectMixin, View):
         obj = self.get_object()
         model_admin = get_django_model_admin(obj.__class__)
         if not model_admin:
-            raise Http404('Can not find ModelAdmin for %r', obj.__class__)
+            raise Http404('Can not find ModelAdmin for {}'.format(obj.__class__))
         
         # Look up the action in the following order:
         # 1. in the named_row_actions dict (for lambdas etc)

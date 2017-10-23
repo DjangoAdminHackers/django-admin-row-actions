@@ -1,6 +1,6 @@
 from functools import wraps
-from django.db.models.query import QuerySet
 from django.contrib.admin.sites import all_sites
+from django.db.models.query import QuerySet
 
 
 class QuerySetIsh(QuerySet):
