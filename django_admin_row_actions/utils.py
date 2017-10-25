@@ -1,4 +1,5 @@
 from functools import wraps
+from django.contrib.admin.sites import all_sites
 from django.db.models.query import QuerySet
 
 
@@ -39,3 +40,15 @@ def takes_instance_or_queryset(func):
             queryset = QuerySetIsh(queryset)
         return func(self, request, queryset)
     return decorated_function
+
+
+def get_django_model_admin(model):
+    """Search Django ModelAdmin for passed model.
+
+    Returns instance if found, otherwise None.
+    """
+    for admin_site in all_sites:
+        registry = admin_site._registry
+        if model in registry:
+            return registry[model]
+    return None

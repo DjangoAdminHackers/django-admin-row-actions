@@ -1,8 +1,9 @@
-from django.contrib import admin
 from django.contrib import messages
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.views.generic import View
 from django.views.generic.detail import SingleObjectMixin
+
+from .utils import get_django_model_admin
 
 
 class ModelToolsView(SingleObjectMixin, View):
@@ -15,7 +16,9 @@ class ModelToolsView(SingleObjectMixin, View):
         # is instantiated with `model` and the urlpattern has `pk`.
         
         obj = self.get_object()
-        model_admin = admin.site._registry[obj.__class__]
+        model_admin = get_django_model_admin(obj.__class__)
+        if not model_admin:
+            raise Http404('Can not find ModelAdmin for {}'.format(obj.__class__))
         
         # Look up the action in the following order:
         # 1. in the named_row_actions dict (for lambdas etc)

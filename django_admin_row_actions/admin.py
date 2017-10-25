@@ -95,7 +95,7 @@ class AdminRowActionsMixin(object):
 
         my_urls = patterns(
             '',
-            url(r'^(?P<pk>\d+)/rowactions/(?P<tool>\w+)/$',
+            url(r'^(?P<pk>[0-9a-f-]+)/rowactions/(?P<tool>\w+)/$',
                 self.admin_site.admin_view(ModelToolsView.as_view(model=self.model))
             )
         )
