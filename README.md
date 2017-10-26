@@ -60,6 +60,7 @@ Installation
                 'url': reverse('convert_stuff', args=[obj.id]),
                 'tooltip': 'Convert stuff',
             }, {
+                'divided': True,
                 'label': 'Cancel',
                 'action': 'mark_cancelled',
             },
@@ -73,6 +74,8 @@ The first three menu items are simple links to a url you provide by whatever mea
 The final one defines 'action' instead of 'url'. This should be the name of a callable on your `ModelAdmin` or `Model` class (similar to [ModelAdmin.list_display](https://docs.djangoproject.com/en/1.8/ref/contrib/admin/#django.contrib.admin.ModelAdmin.list_display)).
 
 You can add mouseover tooltips to each individual actions with the 'tooltip' dictionary key, and enable/disable individual actions for each individual object with the 'enabled'.
+
+Special option 'divided' can be passed to any item to display horizontal rule above it.
 
 
 Credits
