@@ -1,7 +1,12 @@
 from functools import wraps
-from django.contrib.admin.sites import all_sites
 from django.db.models.query import QuerySet
 
+# Multiple admin sites only currently work in Django 1.11 due to use of all_sites
+try:
+    from django.contrib.admin.sites import all_sites
+except ImportError:
+    from django.contrib import admin
+    all_sites = [admin.site]
 
 class QuerySetIsh(QuerySet):
     
