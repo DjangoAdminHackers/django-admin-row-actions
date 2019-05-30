@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='django-admin-row-actions',
-    version='0.0.4',
+    version='0.0.5',
     description='django admin row actions',
     author='Andy Baker',
     author_email='andy@andybak.net',
