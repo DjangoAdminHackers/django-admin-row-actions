@@ -58,3 +58,5 @@ target/
 
 # IDE/Editor stuff
 .idea/*
+
+.DS_Store

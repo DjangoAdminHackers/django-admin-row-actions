@@ -59,8 +59,8 @@
                 .data('jq-dropdown-trigger', trigger)
                 .show();
     
-            // Position it
-            position();
+            // Position it (TODO: bug)
+            // position();
     
             // Trigger the show callback
             jqDropdown
@@ -131,7 +131,8 @@
     
         $(document).on('click.jq-dropdown', '[data-jq-dropdown]', show);
         $(document).on('click.jq-dropdown', hide);
-        $(window).on('resize', position);
+        // TODO: bug
+        //  $(window).on('resize', position);
     
     })(jQuery);
 })(django.jQuery);

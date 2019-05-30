@@ -1,5 +1,7 @@
 from django import VERSION
+from django import forms
 from django.conf.urls import url
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 from six import string_types
@@ -28,9 +30,17 @@ class AdminRowActionsMixin(object):
 
     @property
     def media(self):
-        media = super(AdminRowActionsMixin, self).media
-        media.add_js(['js/jquery.dropdown.min.js'])
-        media.add_css({'all': ['css/jquery.dropdown.min.css']})
+        css = super(AdminRowActionsMixin, self).media._css
+        css['all'] = css.get('all', [])
+        css['all'].extend(["css/jquery.dropdown.min.css"])
+
+        js = super(AdminRowActionsMixin, self).media._js
+        js.extend(["js/jquery.dropdown.min.js",])
+
+        media = forms.Media(
+            css=css, js=js
+        )
+
         return media
 
     def get_list_display(self, request):
@@ -64,7 +74,7 @@ class AdminRowActionsMixin(object):
 
             elif isinstance(tool, dict):  # A parameter dict
                 tool['enabled'] = tool.get('enabled', True)
-                if 'action' in tool:      # If 'action' is specified then use our generic url in preference to 'url' value
+                if 'action' in tool:  # If 'action' is specified then use our generic url in preference to 'url' value
                     if isinstance(tool['action'], tuple):
                         self._named_row_actions[tool['action'][0]] = tool['action'][1]
                         tool['url'] = '{}rowactions/{}/'.format(url_prefix, tool['action'][0])
@@ -83,11 +93,15 @@ class AdminRowActionsMixin(object):
                 items=items,
                 request=getattr(self, '_request')
             ).render()
-
-            return html
+            if VERSION < (1, 9):
+                return html
+            else:
+                return mark_safe(html)
         return ''
     _row_actions.short_description = ''
-    _row_actions.allow_tags = True
+
+    if VERSION < (1, 9):
+        _row_actions.allow_tags = True
 
     def get_tool_urls(self):
 
