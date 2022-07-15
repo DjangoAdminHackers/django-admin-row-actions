@@ -1,24 +1,13 @@
 from django import VERSION
 from django import forms
-from django.conf.urls import url
+from django.urls import re_path
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from six import string_types
 
 from .components import Dropdown
 from .views import ModelToolsView
-
-
-def patterns(prefix, *args):
-    if VERSION < (1, 9):
-        from django.conf.urls import patterns as django_patterns
-        return django_patterns(prefix, *args)
-    elif prefix != '':
-        raise Exception("You need to update your URLConf to be a list of URL "
-                        "objects")
-    else:
-        return list(args)
 
 
 class AdminRowActionsMixin(object):
@@ -107,12 +96,11 @@ class AdminRowActionsMixin(object):
 
         """Gets the url patterns that route each tool to a special view"""
 
-        my_urls = patterns(
-            '',
-            url(r'^(?P<pk>[0-9a-f-]+)/rowactions/(?P<tool>\w+)/$',
+        my_urls = [
+            re_path(r'^(?P<pk>[0-9a-f-]+)/rowactions/(?P<tool>\w+)/$',
                 self.admin_site.admin_view(ModelToolsView.as_view(model=self.model))
             )
-        )
+        ]
         return my_urls
 
     ###################################
