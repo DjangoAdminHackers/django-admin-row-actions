@@ -2,7 +2,7 @@ from django import VERSION
 from django import forms
 from django.urls import re_path
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from six import string_types
 
