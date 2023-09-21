@@ -1,6 +1,6 @@
 from django import VERSION
 from django import forms
-from django.conf.urls import url
+from django.urls import re_path
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
@@ -109,7 +109,7 @@ class AdminRowActionsMixin(object):
 
         my_urls = patterns(
             '',
-            url(r'^(?P<pk>[0-9a-f-]+)/rowactions/(?P<tool>\w+)/$',
+            re_path(r'^(?P<pk>[0-9a-f-]+)/rowactions/(?P<tool>\w+)/$',
                 self.admin_site.admin_view(ModelToolsView.as_view(model=self.model))
             )
         )
