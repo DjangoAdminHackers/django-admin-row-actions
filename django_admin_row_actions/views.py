@@ -41,7 +41,7 @@ class ModelToolsView(SingleObjectMixin, View):
         if isinstance(ret, HttpResponse):
             response = ret
         else:
-            back = request.META['HTTP_REFERER']
+            back = request.headers['referer']
             response = HttpResponseRedirect(back)
             
         return response
