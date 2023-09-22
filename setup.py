@@ -3,8 +3,8 @@ from setuptools import setup
 
 setup(
     name='django-admin-row-actions',
-    version='0.0.6',
-    description='django admin row actions',
+    version='0.10.0',
+    description='Add action buttons to individual rows in the Django Admin',
     author='Andy Baker',
     author_email='andy@andybak.net',
     url='https://github.com/DjangoAdminHackers/django-admin-row-actions',
