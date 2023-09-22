@@ -19,18 +19,10 @@ class AdminRowActionsMixin(object):
 
     @property
     def media(self):
-        css = super(AdminRowActionsMixin, self).media._css
-        css['all'] = css.get('all', [])
-        css['all'].extend(["css/jquery.dropdown.min.css"])
-
-        js = super(AdminRowActionsMixin, self).media._js
-        js.extend(["js/jquery.dropdown.min.js",])
-
-        media = forms.Media(
-            css=css, js=js
+        return super(AdminRowActionsMixin, self).media + forms.Media(
+            css={'all': ["css/jquery.dropdown.min.css"]},
+            js=["js/jquery.dropdown.min.js"],
         )
-
-        return media
 
     def get_list_display(self, request):
         self._request = request
