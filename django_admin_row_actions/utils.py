@@ -20,7 +20,7 @@ class QuerySetIsh(QuerySet):
             # we may be able to throw away all this logic
             model = instance._meta.concrete_model
         self._doa_instance = instance
-        super(QuerySetIsh, self).__init__(model, *args, **kwargs)
+        super().__init__(model, *args, **kwargs)
         self._result_cache = [instance]
 
     def _clone(self, *args, **kwargs):

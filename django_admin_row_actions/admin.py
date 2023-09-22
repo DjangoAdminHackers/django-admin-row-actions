@@ -10,7 +10,7 @@ from .components import Dropdown
 from .views import ModelToolsView
 
 
-class AdminRowActionsMixin(object):
+class AdminRowActionsMixin:
 
     """ModelAdmin mixin to add row actions just like adding admin actions"""
 
@@ -19,14 +19,14 @@ class AdminRowActionsMixin(object):
 
     @property
     def media(self):
-        return super(AdminRowActionsMixin, self).media + forms.Media(
+        return super().media + forms.Media(
             css={'all': ["css/jquery.dropdown.min.css"]},
             js=["js/jquery.dropdown.min.js"],
         )
 
     def get_list_display(self, request):
         self._request = request
-        list_display = super(AdminRowActionsMixin, self).get_list_display(request)
+        list_display = super().get_list_display(request)
         if '_row_actions' not in list_display:
             list_display += ('_row_actions',)
         return list_display
@@ -42,14 +42,14 @@ class AdminRowActionsMixin(object):
         items = []
 
         row_actions = self.get_row_actions(obj)
-        url_prefix = '{}/'.format(obj.pk if includePk else '')
+        url_prefix = "{obj.pk if includePk else ''}/"
 
         for tool in row_actions:
-            if isinstance(tool, string_types):  # Just a str naming a callable
+            if isinstance(tool, str):  # Just a str naming a callable
                 tool_dict = to_dict(tool)
                 items.append({
                     'label': tool_dict['label'],
-                    'url': '{}rowactions/{}/'.format(url_prefix, tool),
+                    'url': f"{url_prefix}rowactions/{tool}/",
                     'method': tool_dict.get('POST', 'GET')
                 })
 
@@ -58,9 +58,9 @@ class AdminRowActionsMixin(object):
                 if 'action' in tool:  # If 'action' is specified then use our generic url in preference to 'url' value
                     if isinstance(tool['action'], tuple):
                         self._named_row_actions[tool['action'][0]] = tool['action'][1]
-                        tool['url'] = '{}rowactions/{}/'.format(url_prefix, tool['action'][0])
+                        tool['url'] = f"{url_prefix}rowactions/{tool['action'][0]}/"
                     else:
-                        tool['url'] = '{}rowactions/{}/'.format(url_prefix, tool['action'])
+                        tool['url'] = f"{url_prefix}rowactions/{tool['action']}/"
                 items.append(tool)
 
         return items
@@ -103,7 +103,7 @@ class AdminRowActionsMixin(object):
 
         """Prepends `get_urls` with our own patterns"""
 
-        urls = super(AdminRowActionsMixin, self).get_urls()
+        urls = super().get_urls()
         return self.get_tool_urls() + urls
 
     ##################
@@ -118,7 +118,7 @@ class AdminRowActionsMixin(object):
         # If we're also using django_object_actions
         # then try to reuse row actions as object actions
 
-        change_actions = super(AdminRowActionsMixin, self).get_change_actions(request, object_id, form_url)
+        change_actions = super().get_change_actions(request, object_id, form_url)
 
         # Make this reuse opt-in
         if getattr(self, 'reuse_row_actions_as_object_actions', False):
@@ -128,10 +128,10 @@ class AdminRowActionsMixin(object):
 
             for row_action in row_actions:
                 # Object actions only supports strings as action indentifiers
-                if isinstance(row_action, string_types):
+                if isinstance(row_action, str):
                     change_actions.append(row_action)
                 elif isinstance(row_action, dict):
-                    if isinstance(row_action['action'], string_types):
+                    if isinstance(row_action['action'], str):
                         change_actions.append(row_action['action'])
                     elif isinstance(row_action['action'], tuple):
                         change_actions.append(str(row_action['action'][1]))
