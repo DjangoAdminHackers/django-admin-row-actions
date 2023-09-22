@@ -9,9 +9,6 @@ setup(
     author_email='andy@andybak.net',
     url='https://github.com/DjangoAdminHackers/django-admin-row-actions',
     packages=find_packages(),
-    install_requires=[
-        'six',
-    ],
     package_data={
         'django_admin_row_actions': [
             'static/css/*.css',

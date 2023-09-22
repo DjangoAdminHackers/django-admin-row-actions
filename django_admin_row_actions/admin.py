@@ -4,8 +4,6 @@ from django.urls import re_path
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
-from six import string_types
-
 from .components import Dropdown
 from .views import ModelToolsView
 
