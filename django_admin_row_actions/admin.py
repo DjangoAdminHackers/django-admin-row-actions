@@ -40,14 +40,14 @@ class AdminRowActionsMixin:
         items = []
 
         row_actions = self.get_row_actions(obj)
-        url_prefix = "{obj.pk if includePk else ''}/"
+        url_prefix = f'{obj.pk if includePk else ""}/'
 
         for tool in row_actions:
             if isinstance(tool, str):  # Just a str naming a callable
                 tool_dict = to_dict(tool)
                 items.append({
                     'label': tool_dict['label'],
-                    'url': f"{url_prefix}rowactions/{tool}/",
+                    'url': f'{url_prefix}rowactions/{tool}/',
                     'method': tool_dict.get('POST', 'GET')
                 })
 
@@ -56,9 +56,9 @@ class AdminRowActionsMixin:
                 if 'action' in tool:  # If 'action' is specified then use our generic url in preference to 'url' value
                     if isinstance(tool['action'], tuple):
                         self._named_row_actions[tool['action'][0]] = tool['action'][1]
-                        tool['url'] = f"{url_prefix}rowactions/{tool['action'][0]}/"
+                        tool['url'] = f'{url_prefix}rowactions/{tool["action"][0]}/'
                     else:
-                        tool['url'] = f"{url_prefix}rowactions/{tool['action']}/"
+                        tool['url'] = f'{url_prefix}rowactions/{tool["action"]}/'
                 items.append(tool)
 
         return items

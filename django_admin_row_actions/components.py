@@ -15,7 +15,7 @@ class BaseComponent:
 
     @classmethod
     def get_unique_id(cls):
-        return f"{cls.__name__.lower()}-{len(cls.instances)}"
+        return f'{cls.__name__.lower()}-{len(cls.instances)}'
 
     def render(self):
         return render_to_string(
