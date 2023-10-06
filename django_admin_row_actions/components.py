@@ -2,7 +2,7 @@ import weakref
 from django.template.loader import render_to_string
 
 
-class BaseComponent(object):
+class BaseComponent:
 
     template = None
     instances = []
@@ -15,7 +15,7 @@ class BaseComponent(object):
 
     @classmethod
     def get_unique_id(cls):
-        return "{}-{}".format(cls.__name__.lower(), len(cls.instances))
+        return f'{cls.__name__.lower()}-{len(cls.instances)}'
 
     def render(self):
         return render_to_string(
@@ -24,13 +24,9 @@ class BaseComponent(object):
             request=self.request
         )
 
-    def __unicode__(self):
+    def __str__(self):
         return self.render()
 
 
 class Dropdown(BaseComponent):
-
     template = 'django_admin_row_actions/dropdown.html'
-
-    def __init__(self, **kwargs):
-        super(Dropdown, self).__init__(**kwargs)

@@ -1,0 +1,17 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "django-admin-row-actions"
+description = "Add action buttons to individual rows in the Django Admin"
+readme = "README.md"
+version = "0.10.0"
+authors = [
+    "Andy Baker <andy@andybak.net>",
+]
+packages = [
+    { include = "django_admin_row_actions" },
+]
+homepage = "https://pypi.org/project/django-admin-row-actions/"
+repository = "https://github.com/DjangoAdminHackers/django-admin-row-actions"
